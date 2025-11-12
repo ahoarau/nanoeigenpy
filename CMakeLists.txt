@@ -34,7 +34,7 @@ endif()
 xxx_find_package(Eigen3 CONFIG REQUIRED)
 
 xxx_find_python(3.8 REQUIRED COMPONENTS Interpreter Development.Module)
-xxx_find_nanobind(2.4.0 CONFIG REQUIRED)
+xxx_find_nanobind(CONFIG REQUIRED)
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
   xxx_find_package(CHOLMOD CONFIG REQUIRED)
