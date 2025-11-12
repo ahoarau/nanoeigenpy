@@ -31,7 +31,7 @@ if(BUILD_WITH_ACCELERATE_SUPPORT AND NOT APPLE)
     message(WARNING "Accelerate support is only available on APPLE systems")
 endif()
 
-xxx_find_package(Eigen3 3.4.0 CONFIG REQUIRED)
+xxx_find_package(Eigen3 CONFIG REQUIRED)
 
 xxx_find_python(3.8 REQUIRED COMPONENTS Interpreter Development.Module)
 xxx_find_nanobind(2.4.0 CONFIG REQUIRED)

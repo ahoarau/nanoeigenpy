@@ -38,7 +38,7 @@ using SparseLU = Eigen::SparseLU<SparseMatrix>;
 using SCMatrix = typename SparseLU::SCMatrix;
 using StorageIndex = typename Matrix::StorageIndex;
 using MappedSparseMatrix =
-    typename Eigen::MappedSparseMatrix<Scalar, Options, StorageIndex>;
+    typename Eigen::Map<Eigen::SparseMatrix<Scalar, Options, StorageIndex>>;
 
 NB_MAKE_OPAQUE(ColPivHhJacobiSVD)
 NB_MAKE_OPAQUE(FullPivHhJacobiSVD)
