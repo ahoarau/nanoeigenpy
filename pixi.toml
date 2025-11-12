@@ -74,16 +74,25 @@ configure = { cmd = [
   "-G",
   "Ninja",
   "-B",
-  "build",
+  "build/$NANOEIGENPY_BUILD_TYPE",
   "-S",
   ".",
   "-DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX",
+  "-DBUILD_TESTING=ON",
   "-DCMAKE_BUILD_TYPE=$NANOEIGENPY_BUILD_TYPE",
   "-DBUILD_WITH_CHOLMOD_SUPPORT=$NANOEIGENPY_CHOLMOD_SUPPORT",
   "-DBUILD_WITH_ACCELERATE_SUPPORT=$NANOEIGENPY_ACCELERATE_SUPPORT",
 ] }
-build = { cmd = "cmake --build build --target all", depends-on = ["configure"] }
-clean = { cmd = "rm -rf build" }
+build = { cmd = "cmake --build build/$NANOEIGENPY_BUILD_TYPE", depends-on = [
+  "configure",
+] }
+clean = { cmd = "rm -rf build/$NANOEIGENPY_BUILD_TYPE" }
+install = { cmd = "cmake --install build/$NANOEIGENPY_BUILD_TYPE", depends-on = [
+  "build",
+] }
+test = { cmd = "ctest --output-on-failure --test-dir build/$NANOEIGENPY_BUILD_TYPE", depends-on = [
+  "build",
+] }
 
 # Increment the version number with NANOEIGENPY_VERSION variable
 [feature.new-version.dependencies]
