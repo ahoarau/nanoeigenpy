@@ -1,8 +1,10 @@
 build*/
+install*/
 .cache/
-__pycache__
-.pytest_cache
-
+__pycache__/
+.pytest_cache/
+compile_commands.json
 # pixi environments
-.pixi
+.pixi/
 *.egg-info
+.DS_Store
