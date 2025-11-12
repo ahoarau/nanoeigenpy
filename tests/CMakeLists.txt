@@ -2,12 +2,10 @@ nanobind_add_module(quaternion
   NB_STATIC LTO
   quaternion.cpp
 )
-target_link_libraries(
+target_link_libraries(quaternion PRIVATE Eigen3::Eigen)
+set_target_properties(
   quaternion
-  PRIVATE Eigen3::Eigen
-)
-set_target_properties(quaternion PROPERTIES 
-  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/test-quaternion
+  PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/test-quaternion
 )
 
 function(nanoeigenpy_add_test name)
@@ -21,7 +19,8 @@ function(nanoeigenpy_add_test name)
   set_tests_properties(
     ${test_name}
     PROPERTIES
-      ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/lib/site-packages:${CMAKE_CURRENT_BINARY_DIR}/test-quaternion"
+      ENVIRONMENT
+        "PYTHONPATH=${CMAKE_BINARY_DIR}/lib/site-packages:${CMAKE_CURRENT_BINARY_DIR}/test-quaternion"
       DEPENDS "nanoeigenpy;quaternion"
   )
 endfunction()
@@ -62,6 +61,3 @@ endif()
 if(BUILD_WITH_ACCELERATE_SUPPORT)
   nanoeigenpy_add_test(accelerate)
 endif()
-
-
-

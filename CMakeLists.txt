@@ -11,7 +11,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(cmake-utils)
 
-project(nanoeigenpy 
+project(
+  nanoeigenpy
   VERSION 0.12.0
   DESCRIPTION "A support library for bindings between Eigen in C++ and Python, based on nanobind"
   HOMEPAGE_URL "https://github.com/Simple-Robotics/nanoeigenpy"
@@ -21,14 +22,16 @@ xxx_configure_defaults()
 
 xxx_option(INSTALL_DOCUMENTATION "Generate and install the documentation" OFF)
 
-xxx_option(BUILD_WITH_CHOLMOD_SUPPORT 
-      "Build EigenPy with the Cholmod (LGPL) support. See CHOLMOD/Doc/License.txt for further details." OFF)
+xxx_option(BUILD_WITH_CHOLMOD_SUPPORT
+      "Build EigenPy with the Cholmod (LGPL) support. See CHOLMOD/Doc/License.txt for further details." OFF
+)
 
 xxx_option(BUILD_WITH_ACCELERATE_SUPPORT
-        "Build EigenPy with the Accelerate support (Apple only)" OFF)
+        "Build EigenPy with the Accelerate support (Apple only)" OFF
+)
 
 if(BUILD_WITH_ACCELERATE_SUPPORT AND NOT APPLE)
-    message(WARNING "Accelerate support is only available on APPLE systems")
+  message(WARNING "Accelerate support is only available on APPLE systems")
 endif()
 
 xxx_find_package(Eigen3 CONFIG REQUIRED)
@@ -48,7 +51,8 @@ if(BUILD_TESTING)
   xxx_find_package(Pytest REQUIRED)
 endif()
 
-set(nanoeigenpy_HEADERS
+set(
+  nanoeigenpy_HEADERS
   include/nanoeigenpy/decompositions/sparse/simplicial-cholesky.hpp
   include/nanoeigenpy/decompositions/sparse/simplicial-ldlt.hpp
   include/nanoeigenpy/decompositions/sparse/simplicial-llt.hpp
@@ -108,7 +112,9 @@ set(nanoeigenpy_HEADERS
 )
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
-  list(APPEND nanoeigenpy_HEADERS
+  list(
+    APPEND
+    nanoeigenpy_HEADERS
     include/nanoeigenpy/decompositions/sparse/cholmod/cholmod-base.hpp
     include/nanoeigenpy/decompositions/sparse/cholmod/cholmod-decomposition.hpp
     include/nanoeigenpy/decompositions/sparse/cholmod/cholmod-simplicial-ldlt.hpp
@@ -118,7 +124,9 @@ if(BUILD_WITH_CHOLMOD_SUPPORT)
 endif()
 
 if(BUILD_WITH_ACCELERATE_SUPPORT)
-  list(APPEND nanoeigenpy_HEADERS
+  list(
+    APPEND
+    nanoeigenpy_HEADERS
     include/nanoeigenpy/decompositions/sparse/accelerate/accelerate.hpp
   )
 endif()
@@ -138,23 +146,21 @@ target_include_directories(
 
 set(nanoeigenpy_SOURCES src/module.cpp)
 
-nanobind_add_module(nanoeigenpy 
+nanobind_add_module(nanoeigenpy
   NB_STATIC LTO
   ${nanoeigenpy_SOURCES}
   ${nanoeigenpy_HEADERS}
 )
-set_target_properties(nanoeigenpy PROPERTIES 
-  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages
+set_target_properties(
+  nanoeigenpy
+  PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages
 )
 xxx_target_enforce_msvc_conformance(nanoeigenpy PRIVATE)
 xxx_target_generate_config_header(nanoeigenpy PRIVATE VERSION ${PROJECT_VERSION})
 xxx_target_generate_warning_header(nanoeigenpy PRIVATE)
 xxx_target_generate_deprecated_header(nanoeigenpy PRIVATE)
 
-target_link_libraries(nanoeigenpy PRIVATE
-  nanoeigenpy_headers
-  Eigen3::Eigen
-)
+target_link_libraries(nanoeigenpy PRIVATE nanoeigenpy_headers Eigen3::Eigen)
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
   target_link_libraries(nanoeigenpy PRIVATE SuiteSparse::CHOLMOD)
@@ -166,24 +172,26 @@ if(BUILD_WITH_ACCELERATE_SUPPORT AND APPLE)
   target_compile_definitions(nanoeigenpy PRIVATE NANOEIGENPY_HAS_ACCELERATE)
 endif()
 
-nanobind_add_stub(
-  nanoeigenpy_stub
-  VERBOSE
-  MODULE nanoeigenpy
-  OUTPUT ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy.pyi
-  PYTHON_PATH $<TARGET_FILE_DIR:nanoeigenpy>
-  DEPENDS nanoeigenpy
-)
-install(FILES ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy.pyi 
-  DESTINATION ${Python_SITELIB}/nanoeigenpy
-)
-install(TARGETS nanoeigenpy 
-  LIBRARY DESTINATION ${Python_SITELIB}/nanoeigenpy
-)
+if(nanobind_add_stub)
+  nanobind_add_stub(
+    nanoeigenpy_stub
+    VERBOSE
+    MODULE nanoeigenpy
+    OUTPUT ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy.pyi
+    PYTHON_PATH $<TARGET_FILE_DIR:nanoeigenpy>
+    DEPENDS nanoeigenpy
+  )
+  install(
+    FILES ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy.pyi
+    DESTINATION ${Python_SITELIB}/nanoeigenpy
+  )
+endif()
+
+install(TARGETS nanoeigenpy LIBRARY DESTINATION ${Python_SITELIB}/nanoeigenpy)
 
 # ------------------------------------------------------------------------ #
-xxx_target_headers(nanoeigenpy_headers INTERFACE 
-  HEADERS ${nanoeigenpy_HEADERS} 
+xxx_target_headers(nanoeigenpy_headers INTERFACE
+  HEADERS ${nanoeigenpy_HEADERS}
   BASE_DIRS include
 )
 
