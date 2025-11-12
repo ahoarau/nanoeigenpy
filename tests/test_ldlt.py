@@ -52,7 +52,7 @@ def test_ldlt():
     estimated_r_cond_num = ldlt_cond.rcond()
     assert abs(estimated_r_cond_num - 1) <= 1e-9
 
-    ldlt_compute = ldlt.compute(A)
+    ldlt_compute = ldlt.compute(A)  # noqa
 
     LDLT = ldlt.matrixLDLT()
     LDLT_lower_without_diag = np.tril(LDLT, k=-1)

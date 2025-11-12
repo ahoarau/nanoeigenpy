@@ -1,4 +1,3 @@
-
 import nanoeigenpy
 import numpy as np
 from scipy.sparse import csc_matrix
@@ -6,14 +5,18 @@ import pytest
 
 rng = np.random.default_rng()
 
-@pytest.mark.parametrize("SolverType", [
-    nanoeigenpy.AccelerateLLT,
-    nanoeigenpy.AccelerateLDLT,
-    nanoeigenpy.AccelerateLDLTUnpivoted,
-    nanoeigenpy.AccelerateLDLTSBK,
-    nanoeigenpy.AccelerateLDLTTPP,
-    nanoeigenpy.AccelerateQR,
-])
+
+@pytest.mark.parametrize(
+    "SolverType",
+    [
+        nanoeigenpy.AccelerateLLT,
+        nanoeigenpy.AccelerateLDLT,
+        nanoeigenpy.AccelerateLDLTUnpivoted,
+        nanoeigenpy.AccelerateLDLTSBK,
+        nanoeigenpy.AccelerateLDLTTPP,
+        nanoeigenpy.AccelerateQR,
+    ],
+)
 def test_accelerate_solver(SolverType):
     dim = 100
     A = rng.random((dim, dim))

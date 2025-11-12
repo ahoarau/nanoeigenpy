@@ -26,7 +26,7 @@ def test_partial_piv_lu():
     assert cols == dim
     assert rows == dim
 
-    partialpivlu_compute = partialpivlu.compute(A)
+    partialpivlu_compute = partialpivlu.compute(A)  # noqa
     A_reconstructed = partialpivlu.reconstructedMatrix()
     assert nanoeigenpy.is_approx(A_reconstructed, A)
 

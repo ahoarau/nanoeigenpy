@@ -52,8 +52,8 @@ def test_hessenberg_decomposition():
             if j >= 0:
                 assert abs(H[i, j] - packed[i, j]) < 1e-12
 
-    hess_default = nanoeigenpy.HessenbergDecomposition(dim)
-    hess_matrix = nanoeigenpy.HessenbergDecomposition(A)
+    hess_default = nanoeigenpy.HessenbergDecomposition(dim)  # noqa
+    hess_matrix = nanoeigenpy.HessenbergDecomposition(A)  # noqa
 
     hess1_id = nanoeigenpy.HessenbergDecomposition(dim)
     hess2_id = nanoeigenpy.HessenbergDecomposition(dim)

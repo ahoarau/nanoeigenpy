@@ -87,7 +87,6 @@ def test_tridiagonalization():
 
     assert nanoeigenpy.is_approx(A_tridiag, Q_tridiag @ T_tridiag @ Q_tridiag.T)
 
-
     tri1_id = nanoeigenpy.Tridiagonalization(dim)
     tri2_id = nanoeigenpy.Tridiagonalization(dim)
     id1 = tri1_id.id()

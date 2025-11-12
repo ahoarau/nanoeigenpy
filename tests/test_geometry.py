@@ -13,6 +13,7 @@ def isapprox(a, b, epsilon=1e-6):
     else:
         return abs(a - b) < epsilon
 
+
 def test_geometry():
     # --- Quaternion ---------------------------------------------------------------
     verbose and print("[Quaternion] Coefficient initialisation")
@@ -168,7 +169,7 @@ def test_geometry():
     verbose and print("[ParametrizedLine] 3D hyperplane should fail")
     h_3d = nanoeigenpy.Hyperplane(np.array([1.0, 0.0, 0.0]), 0.0)
     try:
-        line_fail = nanoeigenpy.ParametrizedLine(h_3d)
+        line_fail = nanoeigenpy.ParametrizedLine(h_3d)  # noqa
         print("Error, this message should not appear.")
     except ValueError as e:
         if verbose:
@@ -176,7 +177,9 @@ def test_geometry():
 
     verbose and print("[ParametrizedLine] Distance calculations")
     test_point = np.array([1.0, 0.0])
-    line_x_axis = nanoeigenpy.ParametrizedLine(np.array([0.0, 0.0]), np.array([1.0, 0.0]))
+    line_x_axis = nanoeigenpy.ParametrizedLine(
+        np.array([0.0, 0.0]), np.array([1.0, 0.0])
+    )
     distance = line_x_axis.distance(test_point)
     squared_distance = line_x_axis.squaredDistance(test_point)
     assert isapprox(distance, 0.0)
@@ -195,7 +198,9 @@ def test_geometry():
     assert isapprox(line_x_axis.distance(projection), 0.0)
 
     verbose and print("[ParametrizedLine] Intersection with hyperplane")
-    line_diagonal = nanoeigenpy.ParametrizedLine(np.array([0.0, 0.0]), np.array([1.0, 1.0]))
+    line_diagonal = nanoeigenpy.ParametrizedLine(
+        np.array([0.0, 0.0]), np.array([1.0, 1.0])
+    )
     h_vertical = nanoeigenpy.Hyperplane(np.array([1.0, 0.0]), -1.0)
 
     intersection_param = line_diagonal.intersectionParameter(h_vertical)
@@ -334,8 +339,8 @@ def test_geometry():
     assert not (r_eq1 != r_eq2)
 
     verbose and print("[Rotation2D] Periodic angles")
-    r_period1 = nanoeigenpy.Rotation2D(0.0)
-    r_period2 = nanoeigenpy.Rotation2D(2 * np.pi)
+    r_period1 = nanoeigenpy.Rotation2D(0.0)  # noqa
+    r_period2 = nanoeigenpy.Rotation2D(2 * np.pi)  # noqa
     verbose and print("[Rotation2D] isApprox")
     r_approx1 = nanoeigenpy.Rotation2D(np.pi / 4)
     r_approx2 = nanoeigenpy.Rotation2D(np.pi / 4 + 1e-15)
@@ -398,7 +403,7 @@ def test_geometry():
 
     # --- UniformScaling ------------------------------------------------
     verbose and print("[UniformScaling] Default constructor")
-    s_default = nanoeigenpy.UniformScaling()
+    s_default = nanoeigenpy.UniformScaling()  # noqa
 
     verbose and print("[UniformScaling] Factor constructor")
     factor = 2.5
@@ -532,7 +537,7 @@ def test_geometry():
 
     # --- Translation ------------------------------------------------
     verbose and print("[Translation] Default constructor")
-    t_default = nanoeigenpy.Translation()
+    t_default = nanoeigenpy.Translation()  # noqa
 
     verbose and print("[Translation] 2D constructor with vector")
     t_2d = nanoeigenpy.Translation(np.array([1.0, 2.0]))
@@ -590,7 +595,9 @@ def test_geometry():
 
     verbose and print("[Translation] isApprox")
     t_approx1 = nanoeigenpy.Translation(np.array([1.0, 2.0, 3.0]))
-    t_approx2 = nanoeigenpy.Translation(np.array([1.0 + 1e-15, 2.0 + 1e-15, 3.0 + 1e-15]))
+    t_approx2 = nanoeigenpy.Translation(
+        np.array([1.0 + 1e-15, 2.0 + 1e-15, 3.0 + 1e-15])
+    )
     t_approx3 = nanoeigenpy.Translation(np.array([1.1, 2.1, 3.1]))
     assert t_approx1.isApprox(t_approx2)
     assert t_approx1.isApprox(t_approx2, 1e-12)
@@ -676,7 +683,7 @@ def test_geometry():
     q_val = 4.0
     r_container = np.array([0.0])
     j.makeGivens(p_val, q_val, r_container.ctypes.data)
-    expected_r = np.sqrt(p_val**2 + q_val**2)
+    expected_r = np.sqrt(p_val**2 + q_val**2)  # noqa
 
     verbose and print("[JacobiRotation] Edge cases")
     j_zero = nanoeigenpy.JacobiRotation(1.0, 0.0)

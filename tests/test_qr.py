@@ -11,7 +11,7 @@ def test_qr():
 
     householder_qr = nanoeigenpy.HouseholderQR()
     householder_qr = nanoeigenpy.HouseholderQR(rows, cols)
-    householder_qr = nanoeigenpy.HouseholderQR(A)
+    householder_qr = nanoeigenpy.HouseholderQR(A)  # noqa
 
     householder_qr_eye = nanoeigenpy.HouseholderQR(np.eye(rows, rows))
     X = rng.random((rows, 20))

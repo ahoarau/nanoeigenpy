@@ -26,7 +26,7 @@ def test_full_piv_lu():
     assert cols == dim
     assert rows == dim
 
-    fullpivlu_compute = fullpivlu.compute(A)
+    fullpivlu_compute = fullpivlu.compute(A)  # noqa
     A_reconstructed = fullpivlu.reconstructedMatrix()
     assert nanoeigenpy.is_approx(A_reconstructed, A)
 
@@ -73,7 +73,7 @@ def test_full_piv_lu():
     assert abs(determinant - det_numpy) / abs(det_numpy) < 1e-10
 
     fullpivlu.setThreshold()
-    default_threshold = fullpivlu.threshold()
+    default_threshold = fullpivlu.threshold()  # noqa
     fullpivlu.setThreshold(1e-8)
     assert fullpivlu.threshold() == 1e-8
 

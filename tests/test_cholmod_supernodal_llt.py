@@ -2,6 +2,7 @@ import nanoeigenpy
 import numpy as np
 from scipy.sparse import csc_matrix
 
+
 def test_cholmod_supernodal_llt():
     dim = 100
     rng = np.random.default_rng()

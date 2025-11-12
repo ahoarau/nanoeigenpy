@@ -16,7 +16,10 @@ def test_real_schur():
                     assert abs(T[row + 1, row]) < 1e-12
 
                 tr = T[row - 1, row - 1] + T[row, row]
-                det = T[row - 1, row - 1] * T[row, row] - T[row - 1, row] * T[row, row - 1]
+                det = (
+                    T[row - 1, row - 1] * T[row, row]
+                    - T[row - 1, row] * T[row, row - 1]
+                )
                 assert 4 * det > tr * tr
 
     dim = 100
