@@ -3,13 +3,11 @@
 #
 cmake_minimum_required(VERSION 3.22...4.1)
 
-include(FetchContent)
-FetchContent_Declare(
-  cmake-utils
-  GIT_REPOSITORY https://github.com/ahoarau/cmake-utils.git
-  GIT_TAG main
-)
-FetchContent_MakeAvailable(cmake-utils)
+if(CMAKE_UTILS_SOURCE_DIR)
+  add_subdirectory(${CMAKE_UTILS_SOURCE_DIR} cmake-utils)
+else()
+  find_package(cmake-helpers 0.2.0 CONFIG REQUIRED)
+endif()
 
 project(
   nanoeigenpy
