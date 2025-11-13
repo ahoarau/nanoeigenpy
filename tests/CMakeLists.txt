@@ -10,17 +10,16 @@ set_target_properties(
 
 function(nanoeigenpy_add_test name)
   set(test_name "nanoeigenpy: ${name}")
-  set(source ${CMAKE_CURRENT_SOURCE_DIR}/test_${name}.py)
   add_test(
     NAME ${test_name}
-    COMMAND $<TARGET_FILE:Pytest::Pytest> ${source}
+    COMMAND $<TARGET_FILE:Pytest::Pytest> ${CMAKE_CURRENT_SOURCE_DIR}/test_${name}.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
   )
   set_tests_properties(
     ${test_name}
     PROPERTIES
-      ENVIRONMENT
-        "PYTHONPATH=${CMAKE_BINARY_DIR}/lib/site-packages:${CMAKE_CURRENT_BINARY_DIR}/test-quaternion"
+      ENVIRONMENT_MODIFICATION
+        "PYTHONPATH=path_list_prepend:${CMAKE_BINARY_DIR}/lib/site-packages;PYTHONPATH=path_list_prepend:$<TARGET_FILE_DIR:quaternion>"
       DEPENDS "nanoeigenpy;quaternion"
   )
 endfunction()
