@@ -145,14 +145,12 @@ target_include_directories(
 set(nanoeigenpy_SOURCES src/module.cpp)
 
 nanobind_add_module(nanoeigenpy
-  NB_STATIC LTO
+  NB_STATIC LTO NB_SUPPRESS_WARNINGS
   ${nanoeigenpy_SOURCES}
   ${nanoeigenpy_HEADERS}
 )
-set_target_properties(
-  nanoeigenpy
-  PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages
-)
+xxx_target_set_output_directory(nanoeigenpy ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy)
+
 xxx_target_enforce_msvc_conformance(nanoeigenpy PRIVATE)
 xxx_target_generate_config_header(nanoeigenpy PRIVATE VERSION ${PROJECT_VERSION})
 xxx_target_generate_warning_header(nanoeigenpy PRIVATE)
@@ -175,18 +173,25 @@ if(nanobind_add_stub)
     nanoeigenpy_stub
     VERBOSE
     MODULE nanoeigenpy
-    OUTPUT ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy.pyi
+    OUTPUT ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy/nanoeigenpy.pyi
     PYTHON_PATH $<TARGET_FILE_DIR:nanoeigenpy>
     DEPENDS nanoeigenpy
   )
-  install(
-    FILES ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy.pyi
-    DESTINATION ${Python_SITELIB}/nanoeigenpy
-  )
 endif()
 
-install(TARGETS nanoeigenpy LIBRARY DESTINATION ${Python_SITELIB}/nanoeigenpy)
+xxx_python_compile_all(DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy)
 
+xxx_python_compute_install_dir(python_install_dir)
+install(
+  DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy
+  DESTINATION ${python_install_dir}
+  FILES_MATCHING
+  PATTERN "*.py"
+  PATTERN "*.pyc"
+  PATTERN "*.typed"
+  PATTERN "*.so"
+  PATTERN "*.pyd"
+)
 # ------------------------------------------------------------------------ #
 xxx_target_headers(nanoeigenpy_headers INTERFACE
   HEADERS ${nanoeigenpy_HEADERS}
