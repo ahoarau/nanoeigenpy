@@ -12,7 +12,7 @@ using namespace nb::literals;
 
 template <int SizeAtCompileTime, int MaxSizeAtCompileTime = SizeAtCompileTime,
           typename StorageIndex_ = int>
-void exposePermutationMatrix(nb::module_ m, const char *name) {
+void exposePermutationMatrix(nb::module_ m, const char* name) {
   using StorageIndex = StorageIndex_;
   using PermutationMatrix =
       Eigen::PermutationMatrix<SizeAtCompileTime, MaxSizeAtCompileTime,
@@ -40,7 +40,7 @@ void exposePermutationMatrix(nb::module_ m, const char *name) {
 
       .def(
           "indices",
-          [](const PermutationMatrix &self) {
+          [](const PermutationMatrix& self) {
             return VectorIndex(self.indices());
           },
           "The stored array representing the permutation.")
@@ -53,11 +53,11 @@ void exposePermutationMatrix(nb::module_ m, const char *name) {
            "Multiplies self by the transposition (ij) on the right.")
 
       .def(
-          "setIdentity", [](PermutationMatrix &self) { self.setIdentity(); },
+          "setIdentity", [](PermutationMatrix& self) { self.setIdentity(); },
           "Sets self to be the identity permutation matrix.")
       .def(
           "setIdentity",
-          [](PermutationMatrix &self, Eigen::DenseIndex size) {
+          [](PermutationMatrix& self, Eigen::DenseIndex size) {
             self.setIdentity(size);
           },
           "size"_a,
@@ -69,13 +69,13 @@ void exposePermutationMatrix(nb::module_ m, const char *name) {
 
       .def(
           "transpose",
-          [](const PermutationMatrix &self) -> PermutationMatrix {
+          [](const PermutationMatrix& self) -> PermutationMatrix {
             return self.transpose();
           },
           "Returns the tranpose permutation matrix.")
       .def(
           "inverse",
-          [](const PermutationMatrix &self) -> PermutationMatrix {
+          [](const PermutationMatrix& self) -> PermutationMatrix {
             return self.inverse();
           },
           "Returns the inverse permutation matrix.")

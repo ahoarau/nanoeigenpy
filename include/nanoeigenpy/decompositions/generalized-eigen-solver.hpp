@@ -10,7 +10,7 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename _MatrixType>
-void exposeGeneralizedEigenSolver(nb::module_ m, const char *name) {
+void exposeGeneralizedEigenSolver(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::GeneralizedEigenSolver<MatrixType>;
 
@@ -22,15 +22,15 @@ void exposeGeneralizedEigenSolver(nb::module_ m, const char *name) {
       .def(nb::init<>(), "Default constructor.")
       .def(nb::init<Eigen::DenseIndex>(), "size"_a,
            "Default constructor with memory preallocation.")
-      .def(nb::init<const MatrixType &, const MatrixType &, bool>(), "A"_a,
-           "B"_a, "computeEigenvectors"_a = true,
+      .def(nb::init<const MatrixType&, const MatrixType&, bool>(), "A"_a, "B"_a,
+           "computeEigenvectors"_a = true,
            "Constructor; computes the generalized eigendecomposition of given "
            "matrix pair.")
 
       .def("eigenvectors", &Solver::eigenvectors,
            "Returns the computed generalized eigenvectors.")
       .def(
-          "eigenvalues", [](const Solver &c) { return c.eigenvalues().eval(); },
+          "eigenvalues", [](const Solver& c) { return c.eigenvalues().eval(); },
           "Returns the computed generalized eigenvalues.")
 
       .def("alphas", &Solver::alphas,
@@ -40,7 +40,7 @@ void exposeGeneralizedEigenSolver(nb::module_ m, const char *name) {
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &A, const MatrixType &B) -> Solver & {
+          [](Solver& c, const MatrixType& A, const MatrixType& B) -> Solver& {
             return c.compute(A, B);
           },
           "A"_a, "B"_a,
@@ -48,8 +48,8 @@ void exposeGeneralizedEigenSolver(nb::module_ m, const char *name) {
           nb::rv_policy::reference)
       .def(
           "compute",
-          [](Solver &c, const MatrixType &A, const MatrixType &B,
-             bool computeEigenvectors) -> Solver & {
+          [](Solver& c, const MatrixType& A, const MatrixType& B,
+             bool computeEigenvectors) -> Solver& {
             return c.compute(A, B, computeEigenvectors);
           },
           "A"_a, "B"_a, "computeEigenvectors"_a,

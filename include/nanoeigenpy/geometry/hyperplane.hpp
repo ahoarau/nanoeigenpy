@@ -10,14 +10,14 @@ namespace nb = nanobind;
 
 template <typename Scalar>
 bool isApprox(
-    const Eigen::Hyperplane<Scalar, Eigen::Dynamic> &h,
-    const Eigen::Hyperplane<Scalar, Eigen::Dynamic> &other,
-    const Scalar &prec = Eigen::NumTraits<Scalar>::dummy_precision()) {
+    const Eigen::Hyperplane<Scalar, Eigen::Dynamic>& h,
+    const Eigen::Hyperplane<Scalar, Eigen::Dynamic>& other,
+    const Scalar& prec = Eigen::NumTraits<Scalar>::dummy_precision()) {
   return h.isApprox(other, prec);
 }
 
 template <typename Scalar>
-void exposeHyperplane(nb::module_ m, const char *name) {
+void exposeHyperplane(nb::module_ m, const char* name) {
   using namespace nb::literals;
   using Hyperplane = Eigen::Hyperplane<Scalar, Eigen::Dynamic>;
   using RealScalar = typename Eigen::NumTraits<Scalar>::Real;
@@ -31,18 +31,18 @@ void exposeHyperplane(nb::module_ m, const char *name) {
                          "A hyperplane is an affine subspace of "
                          "dimension n-1 in a space of dimension n.")
       .def(nb::init<>(), "Default constructor")
-      .def(nb::init<const Hyperplane &>(), "copy"_a, "Copy constructor.")
+      .def(nb::init<const Hyperplane&>(), "copy"_a, "Copy constructor.")
       .def(nb::init<Eigen::DenseIndex>(), "dim"_a,
            "Constructs a dynamic-size hyperplane with dim the dimension"
            "of the ambient space.")
-      .def(nb::init<const VectorType &, const VectorType &>(), "n"_a, "e"_a,
+      .def(nb::init<const VectorType&, const VectorType&>(), "n"_a, "e"_a,
            "Construct a plane from its normal \a n and a point \a e onto the "
            "plane.")
-      .def(nb::init<const VectorType &, const Scalar &>(), "n"_a, "d"_a,
+      .def(nb::init<const VectorType&, const Scalar&>(), "n"_a, "d"_a,
            "Constructs a plane from its normal n and distance to the origin d"
            "such that the algebraic equation of the plane is \f$ n dot x + d = "
            "0 \f$.")
-      .def(nb::init<const Parameterized &>(), "parametrized"_a,
+      .def(nb::init<const Parameterized&>(), "parametrized"_a,
            "Constructs a hyperplane passing through the parametrized line \a "
            "parametrized."
            "If the dimension of the ambient space is greater than 2, then "
@@ -50,7 +50,7 @@ void exposeHyperplane(nb::module_ m, const char *name) {
            "so an arbitrary choice is made.")
       .def_static(
           "Through",
-          [](const VectorType &p0, const VectorType &p1) -> Hyperplane {
+          [](const VectorType& p0, const VectorType& p1) -> Hyperplane {
             return Hyperplane::Through(p0, p1);
           },
           "p0"_a, "p1"_a,
@@ -59,8 +59,8 @@ void exposeHyperplane(nb::module_ m, const char *name) {
           "there isn't uniqueness, so an arbitrary choice is made.")
       .def_static(
           "Through",
-          [](const VectorType &p0, const VectorType &p1,
-             const VectorType &p2) -> Hyperplane {
+          [](const VectorType& p0, const VectorType& p1,
+             const VectorType& p2) -> Hyperplane {
             if (p0.size() != 3 || p1.size() != 3 || p2.size() != 3) {
               throw std::invalid_argument(
                   "Through with 3 points requires 3D vectors");
@@ -109,7 +109,7 @@ void exposeHyperplane(nb::module_ m, const char *name) {
 
       .def(
           "normal",
-          [](const Hyperplane &self) -> VectorType {
+          [](const Hyperplane& self) -> VectorType {
             return VectorType(self.normal());
           },
           "Returns a constant reference to the unit normal vector of the "
@@ -117,14 +117,12 @@ void exposeHyperplane(nb::module_ m, const char *name) {
           "which corresponds to the linear part of the implicit equation.")
       .def(
           "offset",
-          [](const Hyperplane &self) -> const Scalar & {
-            return self.offset();
-          },
+          [](const Hyperplane& self) -> const Scalar& { return self.offset(); },
           "Returns the distance to the origin, which is also the constant "
           "term of the implicit equation.",
           nb::rv_policy::reference_internal)
       .def(
-          "coeffs", [](const Hyperplane &self) { return self.coeffs(); },
+          "coeffs", [](const Hyperplane& self) { return self.coeffs(); },
           "Returns a constant reference to the coefficients c_i of the plane "
           "equation: "
           "\f$ c_0*x_0 + ... + c_{d-1}*x_{d-1} + c_d = 0 \f$.",
@@ -132,7 +130,7 @@ void exposeHyperplane(nb::module_ m, const char *name) {
 
       .def(
           "intersection",
-          [](const Hyperplane &self, const Hyperplane &other) -> VectorType {
+          [](const Hyperplane& self, const Hyperplane& other) -> VectorType {
             if (self.dim() != 2 || other.dim() != 2) {
               throw std::invalid_argument(
                   "intersection requires 2D hyperplanes");
@@ -172,14 +170,14 @@ void exposeHyperplane(nb::module_ m, const char *name) {
 
       .def(
           "isApprox",
-          [](const Hyperplane &aa, const Hyperplane &other,
-             const Scalar &prec) -> bool { return isApprox(aa, other, prec); },
+          [](const Hyperplane& aa, const Hyperplane& other,
+             const Scalar& prec) -> bool { return isApprox(aa, other, prec); },
           "other"_a, "prec"_a,
           "Returns true if *this is approximately equal to other, "
           "within the precision determined by prec.")
       .def(
           "isApprox",
-          [](const Hyperplane &aa, const Hyperplane &other) -> bool {
+          [](const Hyperplane& aa, const Hyperplane& other) -> bool {
             return isApprox(aa, other);
           },
           "other"_a,

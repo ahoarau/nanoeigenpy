@@ -9,7 +9,7 @@ namespace nanoeigenpy {
 template <
     typename _MatrixType, int _UpLo = Eigen::Lower,
     typename _Ordering = Eigen::AMDOrdering<typename _MatrixType::StorageIndex>>
-void exposeSimplicialLLT(nb::module_ m, const char *name) {
+void exposeSimplicialLLT(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::SimplicialLLT<MatrixType>;
 
@@ -30,7 +30,7 @@ void exposeSimplicialLLT(nb::module_ m, const char *name) {
       "P^-1.")
 
       .def(nb::init<>(), "Default constructor.")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructs a LLT factorization from a given matrix.")
 
       .def(SimplicialCholeskyVisitor())

@@ -10,7 +10,7 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename _MatrixType>
-void exposeRealQZ(nb::module_ m, const char *name) {
+void exposeRealQZ(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::RealQZ<MatrixType>;
 
@@ -21,8 +21,8 @@ void exposeRealQZ(nb::module_ m, const char *name) {
 
       .def(nb::init<Eigen::DenseIndex>(), "size"_a,
            "Default constructor with memory preallocation.")
-      .def(nb::init<const MatrixType &, const MatrixType &, bool>(), "A"_a,
-           "B"_a, "computeQZ"_a = true,
+      .def(nb::init<const MatrixType&, const MatrixType&, bool>(), "A"_a, "B"_a,
+           "computeQZ"_a = true,
            "Constructor; computes real QZ decomposition of given matrices.")
 
       .def("matrixQ", &Solver::matrixQ,
@@ -40,7 +40,7 @@ void exposeRealQZ(nb::module_ m, const char *name) {
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &A, const MatrixType &B) -> Solver & {
+          [](Solver& c, const MatrixType& A, const MatrixType& B) -> Solver& {
             return c.compute(A, B);
           },
           "A"_a, "B"_a, "Computes QZ decomposition of given matrix. ",
@@ -48,8 +48,8 @@ void exposeRealQZ(nb::module_ m, const char *name) {
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &A, const MatrixType &B,
-             bool computeQZ) -> Solver & { return c.compute(A, B, computeQZ); },
+          [](Solver& c, const MatrixType& A, const MatrixType& B,
+             bool computeQZ) -> Solver& { return c.compute(A, B, computeQZ); },
           "A"_a, "B"_a, "computeQZ"_a,
           "Computes QZ decomposition of given matrix. ",
           nb::rv_policy::reference)

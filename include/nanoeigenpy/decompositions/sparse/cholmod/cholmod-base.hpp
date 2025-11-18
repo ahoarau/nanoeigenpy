@@ -11,7 +11,7 @@ using namespace nb::literals;
 
 struct CholmodBaseVisitor : nb::def_visitor<CholmodBaseVisitor> {
   template <typename CholdmodDerived, typename... Ts>
-  void execute(nb::class_<CholdmodDerived, Ts...> &cl) {
+  void execute(nb::class_<CholdmodDerived, Ts...>& cl) {
     using Solver = CholdmodDerived;
     static_assert(nb::is_base_of_template_v<Solver, Eigen::SparseSolverBase>,
                   "Template type parameter Solver must inherit from "
@@ -27,7 +27,7 @@ struct CholmodBaseVisitor : nb::def_visitor<CholmodBaseVisitor> {
 
         .def(
             "compute",
-            [](Solver &self, const MatrixType &matrix) -> decltype(auto) {
+            [](Solver& self, const MatrixType& matrix) -> decltype(auto) {
               return self.compute(matrix);
             },
             "matrix"_a,

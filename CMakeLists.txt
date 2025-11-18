@@ -111,8 +111,7 @@ set(
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
   list(
-    APPEND
-    nanoeigenpy_HEADERS
+    APPEND nanoeigenpy_HEADERS
     include/nanoeigenpy/decompositions/sparse/cholmod/cholmod-base.hpp
     include/nanoeigenpy/decompositions/sparse/cholmod/cholmod-decomposition.hpp
     include/nanoeigenpy/decompositions/sparse/cholmod/cholmod-simplicial-ldlt.hpp
@@ -123,8 +122,7 @@ endif()
 
 if(BUILD_WITH_ACCELERATE_SUPPORT)
   list(
-    APPEND
-    nanoeigenpy_HEADERS
+    APPEND nanoeigenpy_HEADERS
     include/nanoeigenpy/decompositions/sparse/accelerate/accelerate.hpp
   )
 endif()

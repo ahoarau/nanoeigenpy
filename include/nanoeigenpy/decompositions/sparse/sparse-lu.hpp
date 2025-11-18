@@ -11,7 +11,7 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename LTypeOrUType, typename MatrixOrVector>
-static void solveInPlace(const LTypeOrUType &self,
+static void solveInPlace(const LTypeOrUType& self,
                          Eigen::Ref<MatrixOrVector> mat_vec) {
   self.solveInPlace(mat_vec);
 }
@@ -56,7 +56,7 @@ void exposeMatrixU(nb::module_ m) {
 
 template <typename _MatrixType, typename _Ordering = Eigen::COLAMDOrdering<
                                     typename _MatrixType::StorageIndex>>
-void exposeSparseLU(nb::module_ m, const char *name) {
+void exposeSparseLU(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::SparseLU<MatrixType>;
   using Scalar = typename MatrixType::Scalar;
@@ -111,7 +111,7 @@ void exposeSparseLU(nb::module_ m, const char *name) {
       "ordering methods.")
 
       .def(nb::init<>(), "Default constructor.")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructs a LU factorization from a given matrix.")
 
       .def(SparseSolverBaseVisitor())
@@ -131,10 +131,10 @@ void exposeSparseLU(nb::module_ m, const char *name) {
            "The input matrix should be in column-major storage.")
 
       .def(
-          "matrixL", [](const Solver &self) -> LType { return self.matrixL(); },
+          "matrixL", [](const Solver& self) -> LType { return self.matrixL(); },
           "Returns an expression of the matrix L.")
       .def(
-          "matrixU", [](const Solver &self) -> UType { return self.matrixU(); },
+          "matrixU", [](const Solver& self) -> UType { return self.matrixU(); },
           "Returns an expression of the matrix U.")
 
       .def("rows", &Solver::rows, "Returns the number of rows of the matrix.")
@@ -154,7 +154,7 @@ void exposeSparseLU(nb::module_ m, const char *name) {
 
       .def(
           "setPivotThreshold",
-          [](Solver &self, const RealScalar &thresh) -> void {
+          [](Solver& self, const RealScalar& thresh) -> void {
             return self.setPivotThreshold(thresh);
           },
           "Set the threshold used for a diagonal entry to be an acceptable "
