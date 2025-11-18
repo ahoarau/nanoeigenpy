@@ -147,7 +147,7 @@ nanobind_add_module(nanoeigenpy
   ${nanoeigenpy_SOURCES}
   ${nanoeigenpy_HEADERS}
 )
-xxx_target_set_output_directory(nanoeigenpy ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy)
+xxx_target_set_output_directory(nanoeigenpy ${CMAKE_BINARY_DIR}/lib/site-packages)
 
 xxx_target_enforce_msvc_conformance(nanoeigenpy PRIVATE)
 xxx_target_generate_config_header(nanoeigenpy PRIVATE VERSION ${PROJECT_VERSION})
@@ -171,17 +171,17 @@ if(nanobind_add_stub)
     nanoeigenpy_stub
     VERBOSE
     MODULE nanoeigenpy
-    OUTPUT ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy/nanoeigenpy.pyi
+    OUTPUT ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy.pyi
     PYTHON_PATH $<TARGET_FILE_DIR:nanoeigenpy>
     DEPENDS nanoeigenpy
   )
 endif()
 
-xxx_python_compile_all(DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy)
+xxx_python_compile_all(DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages)
 
 xxx_python_compute_install_dir(python_install_dir)
 install(
-  DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy
+  DIRECTORY ${CMAKE_BINARY_DIR}/lib/site-packages
   DESTINATION ${python_install_dir}
   FILES_MATCHING
   PATTERN "*.py"
