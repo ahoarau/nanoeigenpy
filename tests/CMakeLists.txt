@@ -3,7 +3,7 @@ nanobind_add_module(quaternion
   quaternion.cpp
 )
 target_link_libraries(quaternion PRIVATE Eigen3::Eigen)
-xxx_target_set_output_directory(quaternion ${CMAKE_CURRENT_BINARY_DIR}/test-quaternion)
+xxx_target_set_output_directory(quaternion OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/test-quaternion)
 
 function(nanoeigenpy_add_test name)
   set(test_name "nanoeigenpy: ${name}")
