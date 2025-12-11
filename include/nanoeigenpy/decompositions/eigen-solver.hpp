@@ -10,7 +10,7 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename _MatrixType>
-void exposeEigenSolver(nb::module_ m, const char *name) {
+void exposeEigenSolver(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::EigenSolver<MatrixType>;
 
@@ -21,7 +21,7 @@ void exposeEigenSolver(nb::module_ m, const char *name) {
       .def(nb::init<>(), "Default constructor.")
       .def(nb::init<Eigen::DenseIndex>(), "size"_a,
            "Default constructor with memory preallocation.")
-      .def(nb::init<const MatrixType &, bool>(), "matrix"_a,
+      .def(nb::init<const MatrixType&, bool>(), "matrix"_a,
            "compute_eigen_vectors"_a = true,
            "Computes eigendecomposition of given matrix")
 
@@ -33,15 +33,15 @@ void exposeEigenSolver(nb::module_ m, const char *name) {
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix) -> Solver & {
+          [](Solver& c, const MatrixType& matrix) -> Solver& {
             return c.compute(matrix);
           },
           "matrix"_a, "Computes the eigendecomposition of given matrix.",
           nb::rv_policy::reference)
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix, bool compute_eigen_vectors)
-              -> Solver & { return c.compute(matrix, compute_eigen_vectors); },
+          [](Solver& c, const MatrixType& matrix, bool compute_eigen_vectors)
+              -> Solver& { return c.compute(matrix, compute_eigen_vectors); },
           "matrix"_a, "compute_eigen_vectors"_a,
           "Computes the eigendecomposition of given matrix.",
           nb::rv_policy::reference)

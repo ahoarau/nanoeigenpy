@@ -10,7 +10,7 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename _MatrixType>
-void exposeRealSchur(nb::module_ m, const char *name) {
+void exposeRealSchur(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::RealSchur<MatrixType>;
 
@@ -21,8 +21,7 @@ void exposeRealSchur(nb::module_ m, const char *name) {
 
       .def(nb::init<Eigen::DenseIndex>(), "size"_a,
            "Default constructor with memory preallocation.")
-      .def(nb::init<const MatrixType &, bool>(), "matrix"_a,
-           "computeU"_a = true,
+      .def(nb::init<const MatrixType&, bool>(), "matrix"_a, "computeU"_a = true,
            "Constructor; computes real Schur decomposition of given matrices.")
 
       .def("matrixU", &Solver::matrixU,
@@ -34,7 +33,7 @@ void exposeRealSchur(nb::module_ m, const char *name) {
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix) -> Solver & {
+          [](Solver& c, const MatrixType& matrix) -> Solver& {
             return c.compute(matrix);
           },
           "matrix"_a, "Computes Schur decomposition of given matrix.",
@@ -42,7 +41,7 @@ void exposeRealSchur(nb::module_ m, const char *name) {
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix, bool computeU) -> Solver & {
+          [](Solver& c, const MatrixType& matrix, bool computeU) -> Solver& {
             return c.compute(matrix, computeU);
           },
           "matrix"_a, "computeU"_a,
@@ -51,8 +50,8 @@ void exposeRealSchur(nb::module_ m, const char *name) {
 
       .def(
           "computeFromHessenberg",
-          [](Solver &c, const MatrixType &matrixH, const MatrixType &matrixQ,
-             bool computeU) -> Solver & {
+          [](Solver& c, const MatrixType& matrixH, const MatrixType& matrixQ,
+             bool computeU) -> Solver& {
             return c.computeFromHessenberg(matrixH, matrixQ, computeU);
           },
           "matrixH"_a, "matrixQ"_a, "computeU"_a,

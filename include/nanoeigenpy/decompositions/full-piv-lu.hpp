@@ -10,13 +10,13 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename MatrixType, typename MatrixOrVector>
-MatrixOrVector solve(const Eigen::FullPivLU<MatrixType> &c,
-                     const MatrixOrVector &vec) {
+MatrixOrVector solve(const Eigen::FullPivLU<MatrixType>& c,
+                     const MatrixOrVector& vec) {
   return c.solve(vec);
 }
 
 template <typename _MatrixType>
-void exposeFullPivLU(nb::module_ m, const char *name) {
+void exposeFullPivLU(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::FullPivLU<MatrixType>;
   using Scalar = typename MatrixType::Scalar;
@@ -58,12 +58,12 @@ void exposeFullPivLU(nb::module_ m, const char *name) {
       .def(nb::init<>(), "Default constructor.")
       .def(nb::init<Eigen::DenseIndex, Eigen::DenseIndex>(), "rows"_a, "cols"_a,
            "Default constructor with memory preallocation.")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructs a LU factorization from a given matrix.")
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix) -> Solver & {
+          [](Solver& c, const MatrixType& matrix) -> Solver& {
             return c.compute(matrix);
           },
           "matrix"_a, "Computes the LU of given matrix.",
@@ -94,11 +94,11 @@ void exposeFullPivLU(nb::module_ m, const char *name) {
            nb::rv_policy::reference_internal)
 
       .def(
-          "kernel", [](Solver &c) -> MatrixType { return c.kernel(); },
+          "kernel", [](Solver& c) -> MatrixType { return c.kernel(); },
           "Computes the LU of given matrix.")
       .def(
           "image",
-          [](Solver &c, const MatrixType &originalMatrix) -> MatrixType {
+          [](Solver& c, const MatrixType& originalMatrix) -> MatrixType {
             return c.image(originalMatrix);
           },
           "Computes the LU of given matrix.")
@@ -112,7 +112,7 @@ void exposeFullPivLU(nb::module_ m, const char *name) {
 
       .def(
           "setThreshold",
-          [](Solver &c, const RealScalar &threshold) {
+          [](Solver& c, const RealScalar& threshold) {
             return c.setThreshold(threshold);
           },
           "threshold"_a,
@@ -133,7 +133,7 @@ void exposeFullPivLU(nb::module_ m, const char *name) {
           nb::rv_policy::reference)
       .def(
           "setThreshold",
-          [](Solver &c) { return c.setThreshold(Eigen::Default); },
+          [](Solver& c) { return c.setThreshold(Eigen::Default); },
           "Allows to come back to the default behavior, letting Eigen use "
           "its default formula for determining the threshold.",
           nb::rv_policy::reference)
@@ -173,7 +173,7 @@ void exposeFullPivLU(nb::module_ m, const char *name) {
            "you can control by calling setThreshold(threshold).")
 
       .def(
-          "inverse", [](const Solver &c) -> MatrixType { return c.inverse(); },
+          "inverse", [](const Solver& c) -> MatrixType { return c.inverse(); },
           "Returns the inverse of the matrix associated with the LU "
           "decomposition.")
       .def("reconstructedMatrix", &Solver::reconstructedMatrix,
@@ -186,7 +186,7 @@ void exposeFullPivLU(nb::module_ m, const char *name) {
 
       .def(
           "solve",
-          [](const Solver &c, const VectorType &b) -> VectorType {
+          [](const Solver& c, const VectorType& b) -> VectorType {
             return solve(c, b);
           },
           "b"_a,
@@ -194,7 +194,7 @@ void exposeFullPivLU(nb::module_ m, const char *name) {
           "decomposition of A.")
       .def(
           "solve",
-          [](const Solver &c, const MatrixType &B) -> MatrixType {
+          [](const Solver& c, const MatrixType& B) -> MatrixType {
             return solve(c, B);
           },
           "B"_a,

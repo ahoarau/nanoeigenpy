@@ -11,7 +11,7 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename MatrixOrVector, typename JacobiSVD>
-MatrixOrVector solve(const JacobiSVD &c, const MatrixOrVector &vec) {
+MatrixOrVector solve(const JacobiSVD& c, const MatrixOrVector& vec) {
   return c.solve(vec);
 }
 
@@ -22,13 +22,13 @@ struct JacobiSVDVisitor : nb::def_visitor<JacobiSVDVisitor<JacobiSVD>> {
   using VectorType = Eigen::Matrix<Scalar, -1, 1>;
 
   template <typename... Ts>
-  void execute(nb::class_<JacobiSVD, Ts...> &cl) {
+  void execute(nb::class_<JacobiSVD, Ts...>& cl) {
     using namespace nb::literals;
     cl.def(nb::init<>(), "Default constructor.")
         .def(nb::init<Eigen::DenseIndex, Eigen::DenseIndex, unsigned int>(),
              "rows"_a, "cols"_a, "computationOptions"_a = 0,
              "Default constructor with memory preallocation.")
-        .def(nb::init<const MatrixType &, unsigned int>(), "matrix"_a,
+        .def(nb::init<const MatrixType&, unsigned int>(), "matrix"_a,
              "computationOptions"_a = 0,
              "Constructs a SVD factorization from a given matrix.")
 
@@ -36,15 +36,15 @@ struct JacobiSVDVisitor : nb::def_visitor<JacobiSVDVisitor<JacobiSVD>> {
 
         .def(
             "compute",
-            [](JacobiSVD &c, const MatrixType &matrix) -> JacobiSVD & {
+            [](JacobiSVD& c, const MatrixType& matrix) -> JacobiSVD& {
               return c.compute(matrix);
             },
             "matrix"_a, "Computes the SVD of given matrix.",
             nb::rv_policy::reference)
         .def(
             "compute",
-            [](JacobiSVD &c, const MatrixType &matrix,
-               unsigned int computationOptions) -> JacobiSVD & {
+            [](JacobiSVD& c, const MatrixType& matrix,
+               unsigned int computationOptions) -> JacobiSVD& {
               return c.compute(matrix, computationOptions);
             },
             "matrix"_a, "computationOptions"_a,
@@ -52,7 +52,7 @@ struct JacobiSVDVisitor : nb::def_visitor<JacobiSVDVisitor<JacobiSVD>> {
 
         .def(
             "solve",
-            [](const JacobiSVD &c, const VectorType &b) -> VectorType {
+            [](const JacobiSVD& c, const VectorType& b) -> VectorType {
               return solve(c, b);
             },
             "b"_a,
@@ -60,7 +60,7 @@ struct JacobiSVDVisitor : nb::def_visitor<JacobiSVDVisitor<JacobiSVD>> {
             "decomposition of A.")
         .def(
             "solve",
-            [](const JacobiSVD &c, const MatrixType &B) -> MatrixType {
+            [](const JacobiSVD& c, const MatrixType& B) -> MatrixType {
               return solve(c, B);
             },
             "B"_a,
@@ -68,7 +68,7 @@ struct JacobiSVDVisitor : nb::def_visitor<JacobiSVDVisitor<JacobiSVD>> {
             "decomposition of A where B is a right hand side matrix.");
   }
 
-  static void expose(nb::module_ &m, const char *name) {
+  static void expose(nb::module_& m, const char* name) {
     if (check_registration_alias<JacobiSVD>(m)) {
       return;
     }
@@ -79,7 +79,7 @@ struct JacobiSVDVisitor : nb::def_visitor<JacobiSVDVisitor<JacobiSVD>> {
 };
 
 template <typename JacobiSVD>
-void exposeJacobiSVD(nb::module_ &m, const char *name) {
+void exposeJacobiSVD(nb::module_& m, const char* name) {
   JacobiSVDVisitor<JacobiSVD>::expose(m, name);
 }
 

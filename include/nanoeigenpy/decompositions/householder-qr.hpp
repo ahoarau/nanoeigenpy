@@ -10,13 +10,13 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename MatrixType, typename MatrixOrVector>
-MatrixOrVector solve(const Eigen::HouseholderQR<MatrixType> &c,
-                     const MatrixOrVector &vec) {
+MatrixOrVector solve(const Eigen::HouseholderQR<MatrixType>& c,
+                     const MatrixOrVector& vec) {
   return c.solve(vec);
 }
 
 template <typename _MatrixType>
-void exposeHouseholderQR(nb::module_ m, const char *name) {
+void exposeHouseholderQR(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::HouseholderQR<MatrixType>;
   using Scalar = typename MatrixType::Scalar;
@@ -52,7 +52,7 @@ void exposeHouseholderQR(nb::module_ m, const char *name) {
            "Default constructor with memory preallocation.\n"
            "Like the default constructor but with preallocation of the "
            "internal data according to the specified problem size. ")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructs a QR factorization from a given matrix.\n"
            "This constructor computes the QR factorization of the matrix "
            "matrix by calling the method compute().")
@@ -88,7 +88,7 @@ void exposeHouseholderQR(nb::module_ m, const char *name) {
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix) -> Solver & {
+          [](Solver& c, const MatrixType& matrix) -> Solver& {
             return c.compute(matrix);
           },
           "matrix"_a, "Computes the QR factorization of given matrix.",
@@ -96,7 +96,7 @@ void exposeHouseholderQR(nb::module_ m, const char *name) {
 
       .def(
           "solve",
-          [](const Solver &c, const VectorType &b) -> VectorType {
+          [](const Solver& c, const VectorType& b) -> VectorType {
             return solve(c, b);
           },
           "b"_a,
@@ -104,7 +104,7 @@ void exposeHouseholderQR(nb::module_ m, const char *name) {
           "decomposition of A where b is a right hand side vector.")
       .def(
           "solve",
-          [](const Solver &c, const MatrixType &B) -> MatrixType {
+          [](const Solver& c, const MatrixType& B) -> MatrixType {
             return solve(c, B);
           },
           "B"_a,

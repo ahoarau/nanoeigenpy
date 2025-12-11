@@ -11,13 +11,13 @@ namespace nb = nanobind;
 
 template <typename Scalar>
 bool isApprox(
-    const Eigen::Rotation2D<Scalar> &r, const Eigen::Rotation2D<Scalar> &other,
-    const Scalar &prec = Eigen::NumTraits<Scalar>::dummy_precision()) {
+    const Eigen::Rotation2D<Scalar>& r, const Eigen::Rotation2D<Scalar>& other,
+    const Scalar& prec = Eigen::NumTraits<Scalar>::dummy_precision()) {
   return r.isApprox(other, prec);
 }
 
 template <typename Scalar>
-void exposeRotation2D(nb::module_ m, const char *name) {
+void exposeRotation2D(nb::module_ m, const char* name) {
   using namespace nb::literals;
   using Rotation2D = Eigen::Rotation2D<Scalar>;
   using Vector2 = typename Rotation2D::Vector2;
@@ -29,16 +29,16 @@ void exposeRotation2D(nb::module_ m, const char *name) {
   nb::class_<Rotation2D>(
       m, name, "Represents a rotation/orientation in a 2 dimensional space.")
       .def(nb::init<>(), "Default constructor")
-      .def(nb::init<const Scalar &>(), "a"_a,
+      .def(nb::init<const Scalar&>(), "a"_a,
            "Construct a 2D counter clock wise rotation from the angle \a a in "
            "radian.")
-      .def(nb::init<const Matrix2 &>(), "mat"_a,
+      .def(nb::init<const Matrix2&>(), "mat"_a,
            "Construct a 2D rotation from a 2x2 rotation matrix \a mat.")
-      .def(nb::init<const Rotation2D &>(), "copy"_a, "Copy constructor.")
+      .def(nb::init<const Rotation2D&>(), "copy"_a, "Copy constructor.")
 
       .def_prop_rw(
-          "angle", [](const Rotation2D &r) -> Scalar { return r.angle(); },
-          [](Rotation2D &r, Scalar a) { r.angle() = a; }, "The rotation angle.")
+          "angle", [](const Rotation2D& r) -> Scalar { return r.angle(); },
+          [](Rotation2D& r, Scalar a) { r.angle() = a; }, "The rotation angle.")
 
       .def("smallestPositiveAngle", &Rotation2D::smallestPositiveAngle,
            "Returns the rotation angle in [0,2pi]")
@@ -49,7 +49,7 @@ void exposeRotation2D(nb::module_ m, const char *name) {
 
       .def(
           "fromRotationMatrix",
-          [](Rotation2D &r, const Matrix2 &mat) -> Rotation2D & {
+          [](Rotation2D& r, const Matrix2& mat) -> Rotation2D& {
             return r.fromRotationMatrix(mat);
           },
           "mat"_a, "Sets *this from a 2x2 rotation matrix",
@@ -58,7 +58,7 @@ void exposeRotation2D(nb::module_ m, const char *name) {
 
       .def(
           "slerp",
-          [](const Rotation2D &self, const Scalar t, const Rotation2D &other)
+          [](const Rotation2D& self, const Scalar t, const Rotation2D& other)
               -> Rotation2D { return self.slerp(t, other); },
           "t"_a, "other"_a,
           "Returns the spherical interpolation between *this and \a other using"
@@ -68,14 +68,14 @@ void exposeRotation2D(nb::module_ m, const char *name) {
 
       .def(
           "isApprox",
-          [](const Rotation2D &r, const Rotation2D &other,
-             const Scalar &prec) -> bool { return isApprox(r, other, prec); },
+          [](const Rotation2D& r, const Rotation2D& other,
+             const Scalar& prec) -> bool { return isApprox(r, other, prec); },
           "other"_a, "prec"_a,
           "Returns true if *this is approximately equal to other, "
           "within the precision determined by prec.")
       .def(
           "isApprox",
-          [](const Rotation2D &r, const Rotation2D &other) -> bool {
+          [](const Rotation2D& r, const Rotation2D& other) -> bool {
             return isApprox(r, other);
           },
           "other"_a,
@@ -84,33 +84,33 @@ void exposeRotation2D(nb::module_ m, const char *name) {
 
       .def(
           "__mul__",
-          [](const Rotation2D &self, const Rotation2D &other) -> Rotation2D {
+          [](const Rotation2D& self, const Rotation2D& other) -> Rotation2D {
             return self * other;
           },
           "other"_a, "Concatenates two rotations")
       .def(
           "__imul__",
-          [](Rotation2D &self, const Rotation2D &other) -> Rotation2D & {
+          [](Rotation2D& self, const Rotation2D& other) -> Rotation2D& {
             return self *= other;
           },
           "other"_a, "Concatenates two rotations in-place",
           nb::rv_policy::reference_internal)
       .def(
           "__mul__",
-          [](const Rotation2D &self, const Vector2 &vec) -> Vector2 {
+          [](const Rotation2D& self, const Vector2& vec) -> Vector2 {
             return self * vec;
           },
           "vec"_a, "Applies the rotation to a 2D vector")
 
       .def(
           "__eq__",
-          [](const Rotation2D &self, const Rotation2D &other) -> bool {
+          [](const Rotation2D& self, const Rotation2D& other) -> bool {
             return std::abs(self.angle() - other.angle()) < 1e-12;
           },
           "other"_a, "Tests equality")
       .def(
           "__ne__",
-          [](const Rotation2D &self, const Rotation2D &other) -> bool {
+          [](const Rotation2D& self, const Rotation2D& other) -> bool {
             return std::abs(self.angle() - other.angle()) >= 1e-12;
           },
           "other"_a, "Tests inequality")

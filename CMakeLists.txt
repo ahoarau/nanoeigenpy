@@ -155,8 +155,7 @@ if(BUILD_WITH_CHOLMOD_SUPPORT)
     include/nanoeigenpy/decompositions/sparse/cholmod/*.hpp
   )
   list(
-    APPEND
-    ${PROJECT_NAME}_HEADERS
+    APPEND ${PROJECT_NAME}_HEADERS
     ${${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_CHOLMOD_HEADERS}
   )
   target_link_libraries(nanoeigenpy PRIVATE CHOLMOD::CHOLMOD)
@@ -196,8 +195,7 @@ if(BUILD_WITH_ACCELERATE_SUPPORT)
     include/nanoeigenpy/decompositions/sparse/accelerate/*.hpp
   )
   list(
-    APPEND
-    ${PROJECT_NAME}_HEADERS
+    APPEND ${PROJECT_NAME}_HEADERS
     ${${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_ACCELERATE_HEADERS}
   )
 else()

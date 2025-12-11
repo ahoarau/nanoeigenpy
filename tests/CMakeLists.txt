@@ -89,8 +89,7 @@ set(
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
   list(
-    APPEND
-    TEST_NAMES
+    APPEND TEST_NAMES
     test_cholmod_simplicial_ldlt
     test_cholmod_simplicial_llt
     test_cholmod_supernodal_llt

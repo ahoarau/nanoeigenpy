@@ -11,19 +11,19 @@ using namespace nb::literals;
 
 template <typename MatrixType, typename MatrixOrVector>
 MatrixOrVector solve(
-    const Eigen::CompleteOrthogonalDecomposition<MatrixType> &c,
-    const MatrixOrVector &vec) {
+    const Eigen::CompleteOrthogonalDecomposition<MatrixType>& c,
+    const MatrixOrVector& vec) {
   return c.solve(vec);
 }
 
 template <typename MatrixType>
 MatrixType pseudoInverse(
-    const Eigen::CompleteOrthogonalDecomposition<MatrixType> &c) {
+    const Eigen::CompleteOrthogonalDecomposition<MatrixType>& c) {
   return c.pseudoInverse();
 }
 
 template <typename _MatrixType>
-void exposeCompleteOrthogonalDecomposition(nb::module_ m, const char *name) {
+void exposeCompleteOrthogonalDecomposition(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::CompleteOrthogonalDecomposition<MatrixType>;
   using Scalar = typename MatrixType::Scalar;
@@ -53,7 +53,7 @@ void exposeCompleteOrthogonalDecomposition(nb::module_ m, const char *name) {
            "Default constructor with memory preallocation.\n"
            "Like the default constructor but with preallocation of the "
            "internal data according to the specified problem size. ")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructs a QR factorization from a given matrix.\n"
            "This constructor computes the QR factorization of the matrix "
            "matrix by calling the method compute().")
@@ -135,7 +135,7 @@ void exposeCompleteOrthogonalDecomposition(nb::module_ m, const char *name) {
 
       .def(
           "setThreshold",
-          [](Solver &c, const RealScalar &threshold) {
+          [](Solver& c, const RealScalar& threshold) {
             return c.setThreshold(threshold);
           },
           "threshold"_a,
@@ -158,7 +158,7 @@ void exposeCompleteOrthogonalDecomposition(nb::module_ m, const char *name) {
           nb::rv_policy::reference)
       .def(
           "setThreshold",
-          [](Solver &c) { return c.setThreshold(Eigen::Default); },
+          [](Solver& c) { return c.setThreshold(Eigen::Default); },
           "Allows to come back to the default behavior, letting Eigen use "
           "its default formula for determining the threshold.",
           nb::rv_policy::reference)
@@ -178,21 +178,21 @@ void exposeCompleteOrthogonalDecomposition(nb::module_ m, const char *name) {
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix) { return c.compute(matrix); },
+          [](Solver& c, const MatrixType& matrix) { return c.compute(matrix); },
           "matrix"_a,
           "Computes the complete orthogonal factorization of given matrix.",
           nb::rv_policy::reference)
 
       .def(
           "pseudoInverse",
-          [](const Solver &c) -> MatrixType { return pseudoInverse(c); },
+          [](const Solver& c) -> MatrixType { return pseudoInverse(c); },
           "Returns the pseudo-inverse of the matrix associated with the "
           "complete orthogonal "
           "decomposition.")
 
       .def(
           "solve",
-          [](const Solver &c, const VectorType &b) -> VectorType {
+          [](const Solver& c, const VectorType& b) -> VectorType {
             return solve(c, b);
           },
           "b"_a,
@@ -200,7 +200,7 @@ void exposeCompleteOrthogonalDecomposition(nb::module_ m, const char *name) {
           "decomposition of A where b is a right hand side vector.")
       .def(
           "solve",
-          [](const Solver &c, const MatrixType &B) -> MatrixType {
+          [](const Solver& c, const MatrixType& B) -> MatrixType {
             return solve(c, B);
           },
           "B"_a,

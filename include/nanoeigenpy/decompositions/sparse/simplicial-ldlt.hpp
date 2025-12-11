@@ -11,7 +11,7 @@ namespace nb = nanobind;
 template <
     typename _MatrixType, int _UpLo = Eigen::Lower,
     typename _Ordering = Eigen::AMDOrdering<typename _MatrixType::StorageIndex>>
-void exposeSimplicialLDLT(nb::module_ m, const char *name) {
+void exposeSimplicialLDLT(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::SimplicialLDLT<MatrixType>;
   using Scalar = typename MatrixType::Scalar;
@@ -34,12 +34,12 @@ void exposeSimplicialLDLT(nb::module_ m, const char *name) {
       "P^-1.")
 
       .def(nb::init<>(), "Default constructor.")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructs a LDLT factorization from a given matrix.")
 
       .def(
           "vectorD",
-          [](const Solver &self) -> DenseVectorXs { return self.vectorD(); },
+          [](const Solver& self) -> DenseVectorXs { return self.vectorD(); },
           "Returns the diagonal vector D.")
 
       .def(SimplicialCholeskyVisitor())

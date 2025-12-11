@@ -10,7 +10,7 @@ namespace nb = nanobind;
 
 struct EigenBaseVisitor : nb::def_visitor<EigenBaseVisitor> {
   template <typename Derived, typename... Ts>
-  void execute(nb::class_<Derived, Ts...> &cl) {
+  void execute(nb::class_<Derived, Ts...>& cl) {
     using EigenBase = Eigen::EigenBase<Derived>;
     static_assert(std::is_base_of_v<EigenBase, Derived>);
     cl.def_prop_ro("cols", &Derived::cols)

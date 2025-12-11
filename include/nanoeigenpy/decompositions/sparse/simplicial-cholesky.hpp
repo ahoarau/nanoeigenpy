@@ -11,7 +11,7 @@ using namespace nb::literals;
 
 struct SimplicialCholeskyVisitor : nb::def_visitor<SimplicialCholeskyVisitor> {
   template <typename SimplicialDerived, typename... Ts>
-  void execute(nb::class_<SimplicialDerived, Ts...> &cl) {
+  void execute(nb::class_<SimplicialDerived, Ts...>& cl) {
     using Solver = SimplicialDerived;
     using Base = Eigen::SimplicialCholeskyBase<Solver>;
     static_assert(std::is_base_of_v<Base, Solver>);
@@ -27,16 +27,16 @@ struct SimplicialCholeskyVisitor : nb::def_visitor<SimplicialCholeskyVisitor> {
 
         .def(
             "matrixL",
-            [](const Solver &self) -> MatrixType { return self.matrixL(); },
+            [](const Solver& self) -> MatrixType { return self.matrixL(); },
             "Returns the lower triangular matrix L.")
         .def(
             "matrixU",
-            [](const Solver &self) -> MatrixType { return self.matrixU(); },
+            [](const Solver& self) -> MatrixType { return self.matrixU(); },
             "Returns the upper triangular matrix U.")
 
         .def(
             "compute",
-            [](Solver &self, const MatrixType &matrix) -> decltype(auto) {
+            [](Solver& self, const MatrixType& matrix) -> decltype(auto) {
               return self.compute(matrix);
             },
             "matrix"_a,

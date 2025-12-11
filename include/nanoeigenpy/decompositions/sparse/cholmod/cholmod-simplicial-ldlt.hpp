@@ -9,7 +9,7 @@ namespace nanoeigenpy {
 namespace nb = nanobind;
 
 template <typename _MatrixType, int _UpLo = Eigen::Lower>
-void exposeCholmodSimplicialLDLT(nb::module_ m, const char *name) {
+void exposeCholmodSimplicialLDLT(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::CholmodSimplicialLDLT<_MatrixType, _UpLo>;
 
@@ -30,7 +30,7 @@ void exposeCholmodSimplicialLDLT(nb::module_ m, const char *name) {
       "The vectors or matrices X and B can be either dense or sparse.")
 
       .def(nb::init<>(), "Default constructor.")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructs a LDLT factorization from a given matrix.")
 
       .def(CholmodBaseVisitor());

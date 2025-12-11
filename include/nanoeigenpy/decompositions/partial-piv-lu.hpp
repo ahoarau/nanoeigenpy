@@ -10,13 +10,13 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename MatrixType, typename MatrixOrVector>
-MatrixOrVector solve(const Eigen::PartialPivLU<MatrixType> &c,
-                     const MatrixOrVector &vec) {
+MatrixOrVector solve(const Eigen::PartialPivLU<MatrixType>& c,
+                     const MatrixOrVector& vec) {
   return c.solve(vec);
 }
 
 template <typename _MatrixType>
-void exposePartialPivLU(nb::module_ m, const char *name) {
+void exposePartialPivLU(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::PartialPivLU<MatrixType>;
   using Scalar = typename MatrixType::Scalar;
@@ -55,12 +55,12 @@ void exposePartialPivLU(nb::module_ m, const char *name) {
       .def(nb::init<>(), "Default constructor.")
       .def(nb::init<Eigen::DenseIndex>(), "size"_a,
            "Default constructor with memory preallocation.")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructs a LU factorization from a given matrix.")
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix) -> Solver & {
+          [](Solver& c, const MatrixType& matrix) -> Solver& {
             return c.compute(matrix);
           },
           "matrix"_a, "Computes the LU of given matrix.",
@@ -84,7 +84,7 @@ void exposePartialPivLU(nb::module_ m, const char *name) {
            "Returns an estimate of the reciprocal condition number of the "
            "matrix.")
       .def(
-          "inverse", [](const Solver &c) -> MatrixType { return c.inverse(); },
+          "inverse", [](const Solver& c) -> MatrixType { return c.inverse(); },
           "Returns the inverse of the matrix associated with the LU "
           "decomposition.")
       .def("determinant", &Solver::determinant,
@@ -100,7 +100,7 @@ void exposePartialPivLU(nb::module_ m, const char *name) {
 
       .def(
           "solve",
-          [](const Solver &c, const VectorType &b) -> VectorType {
+          [](const Solver& c, const VectorType& b) -> VectorType {
             return solve(c, b);
           },
           "b"_a,
@@ -108,7 +108,7 @@ void exposePartialPivLU(nb::module_ m, const char *name) {
           "decomposition of A.")
       .def(
           "solve",
-          [](const Solver &c, const MatrixType &B) -> MatrixType {
+          [](const Solver& c, const MatrixType& B) -> MatrixType {
             return solve(c, B);
           },
           "B"_a,

@@ -15,7 +15,7 @@ namespace nanoeigenpy {
 /// disambiguate the dense matrix type and the sparse matrix type.
 struct SparseSolverBaseVisitor : nb::def_visitor<SparseSolverBaseVisitor> {
   template <typename SimplicialDerived, typename... Ts>
-  void execute(nb::class_<SimplicialDerived, Ts...> &cl) {
+  void execute(nb::class_<SimplicialDerived, Ts...>& cl) {
     using namespace nb::literals;
     using Solver = SimplicialDerived;
     static_assert(nb::is_base_of_template_v<Solver, Eigen::SparseSolverBase>,
@@ -30,21 +30,21 @@ struct SparseSolverBaseVisitor : nb::def_visitor<SparseSolverBaseVisitor> {
 
     cl.def(
           "solve",
-          [](const Solver &self, const Eigen::Ref<DenseVectorXs const> &b)
+          [](const Solver& self, const Eigen::Ref<DenseVectorXs const>& b)
               -> DenseVectorXs { return self.solve(b); },
           "b"_a,
           "Returns the solution x of A x = b using the current decomposition "
           "of A, where b is a right hand side vector.")
         .def(
             "solve",
-            [](const Solver &self, const Eigen::Ref<DenseMatrixXs const> &B)
+            [](const Solver& self, const Eigen::Ref<DenseMatrixXs const>& B)
                 -> DenseMatrixXs { return self.solve(B); },
             "B"_a,
             "Returns the solution X of A X = B using the current decomposition "
             "of A where B is a right hand side matrix.")
         .def(
             "solve",
-            [](const Solver &self, const SparseMatrixType &B)
+            [](const Solver& self, const SparseMatrixType& B)
                 -> SparseMatrixType { return self.solve(B); },
             "B"_a,
             "Returns the solution X of A X = B using the current decomposition "

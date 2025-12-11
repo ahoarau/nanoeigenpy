@@ -10,7 +10,7 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename _MatrixType>
-void exposeHessenbergDecomposition(nb::module_ m, const char *name) {
+void exposeHessenbergDecomposition(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::HessenbergDecomposition<MatrixType>;
 
@@ -21,12 +21,12 @@ void exposeHessenbergDecomposition(nb::module_ m, const char *name) {
 
       .def(nb::init<Eigen::DenseIndex>(), "size"_a,
            "Default constructor with memory preallocation.")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructor; computes Hessenberg decomposition of given matrix.")
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix) -> Solver & {
+          [](Solver& c, const MatrixType& matrix) -> Solver& {
             return c.compute(matrix);
           },
           "matrix"_a, "Computes Hessenberg decomposition of given matrix.",
@@ -41,10 +41,10 @@ void exposeHessenbergDecomposition(nb::module_ m, const char *name) {
            nb::rv_policy::reference_internal)
 
       .def(
-          "matrixQ", [](const Solver &c) -> MatrixType { return c.matrixQ(); },
+          "matrixQ", [](const Solver& c) -> MatrixType { return c.matrixQ(); },
           "Reconstructs the orthogonal matrix Q in the decomposition.")
       .def(
-          "matrixH", [](const Solver &c) -> MatrixType { return c.matrixH(); },
+          "matrixH", [](const Solver& c) -> MatrixType { return c.matrixH(); },
           "Constructs the Hessenberg matrix H in the decomposition.")
 
       .def(IdVisitor());

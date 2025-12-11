@@ -11,7 +11,7 @@ using namespace nb::literals;
 
 struct SVDBaseVisitor : nb::def_visitor<SVDBaseVisitor> {
   template <typename Derived, typename... Ts>
-  void execute(nb::class_<Derived, Ts...> &cl) {
+  void execute(nb::class_<Derived, Ts...>& cl) {
     using MatrixType = typename Derived::MatrixType;
     using RealScalar = typename MatrixType::RealScalar;
 
@@ -22,11 +22,11 @@ struct SVDBaseVisitor : nb::def_visitor<SVDBaseVisitor> {
 
         .def(
             "matrixU",
-            [](const Derived &c) -> MatrixType { return c.matrixU(); },
+            [](const Derived& c) -> MatrixType { return c.matrixU(); },
             "Returns the U matrix")
         .def(
             "matrixV",
-            [](const Derived &c) -> MatrixType { return c.matrixV(); },
+            [](const Derived& c) -> MatrixType { return c.matrixV(); },
             "Returns the U matrix")
 
         .def("singularValues", &SVDBase::singularValues,
@@ -42,7 +42,7 @@ struct SVDBaseVisitor : nb::def_visitor<SVDBaseVisitor> {
 
         .def(
             "setThreshold",
-            [](Derived &c, const RealScalar &threshold) {
+            [](Derived& c, const RealScalar& threshold) {
               return c.setThreshold(threshold);
             },
             "threshold"_a,
@@ -55,7 +55,7 @@ struct SVDBaseVisitor : nb::def_visitor<SVDBaseVisitor> {
             nb::rv_policy::reference)
         .def(
             "setThreshold",
-            [](Derived &c) { return c.setThreshold(Eigen::Default); },
+            [](Derived& c) { return c.setThreshold(Eigen::Default); },
             "Allows to come back to the default behavior, letting Eigen use "
             "its default formula for determining the threshold.",
             nb::rv_policy::reference)

@@ -10,7 +10,7 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename _MatrixType>
-void exposeTridiagonalization(nb::module_ m, const char *name) {
+void exposeTridiagonalization(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::Tridiagonalization<MatrixType>;
 
@@ -21,12 +21,12 @@ void exposeTridiagonalization(nb::module_ m, const char *name) {
 
       .def(nb::init<Eigen::DenseIndex>(), "size"_a,
            "Default constructor with memory preallocation.")
-      .def(nb::init<const MatrixType &>(), "matrix"_a,
+      .def(nb::init<const MatrixType&>(), "matrix"_a,
            "Constructor; computes tridiagonal decomposition of given matrix.")
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix) -> Solver & {
+          [](Solver& c, const MatrixType& matrix) -> Solver& {
             return c.compute(matrix);
           },
           "matrix"_a, "Computes tridiagonal decomposition of given matrix.",
@@ -40,10 +40,10 @@ void exposeTridiagonalization(nb::module_ m, const char *name) {
            nb::rv_policy::reference_internal)
 
       .def(
-          "matrixQ", [](const Solver &c) -> MatrixType { return c.matrixQ(); },
+          "matrixQ", [](const Solver& c) -> MatrixType { return c.matrixQ(); },
           "Returns the unitary matrix Q in the decomposition.")
       .def(
-          "matrixT", [](const Solver &c) -> MatrixType { return c.matrixT(); },
+          "matrixT", [](const Solver& c) -> MatrixType { return c.matrixT(); },
           "Returns an expression of the tridiagonal matrix T in the "
           "decomposition.")
 

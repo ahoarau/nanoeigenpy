@@ -11,13 +11,13 @@ namespace nb = nanobind;
 using namespace nb::literals;
 
 template <typename MatrixType, typename MatrixOrVector>
-MatrixOrVector solve(const Eigen::BDCSVD<MatrixType> &c,
-                     const MatrixOrVector &vec) {
+MatrixOrVector solve(const Eigen::BDCSVD<MatrixType>& c,
+                     const MatrixOrVector& vec) {
   return c.solve(vec);
 }
 
 template <typename _MatrixType>
-void exposeBDCSVD(nb::module_ m, const char *name) {
+void exposeBDCSVD(nb::module_ m, const char* name) {
   using MatrixType = _MatrixType;
   using Solver = Eigen::BDCSVD<MatrixType>;
   using Scalar = typename MatrixType::Scalar;
@@ -43,7 +43,7 @@ void exposeBDCSVD(nb::module_ m, const char *name) {
            "rows"_a, "cols"_a, "computationOptions"_a = 0,
            "Default constructor with memory preallocation.")
 
-      .def(nb::init<const MatrixType &, unsigned int>(), "matrix"_a,
+      .def(nb::init<const MatrixType&, unsigned int>(), "matrix"_a,
            "computationOptions"_a = 0,
            "Constructs a SVD factorization from a given matrix.")
 
@@ -51,14 +51,14 @@ void exposeBDCSVD(nb::module_ m, const char *name) {
 
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix) -> Solver & {
+          [](Solver& c, const MatrixType& matrix) -> Solver& {
             return c.compute(matrix);
           },
           "matrix"_a, "Computes the SVD of given matrix.",
           nb::rv_policy::reference)
       .def(
           "compute",
-          [](Solver &c, const MatrixType &matrix, unsigned int) -> Solver & {
+          [](Solver& c, const MatrixType& matrix, unsigned int) -> Solver& {
             return c.compute(matrix);
           },
           "matrix"_a, "computationOptions"_a,
@@ -68,7 +68,7 @@ void exposeBDCSVD(nb::module_ m, const char *name) {
 
       .def(
           "solve",
-          [](const Solver &c, const VectorType &b) -> VectorType {
+          [](const Solver& c, const VectorType& b) -> VectorType {
             return solve(c, b);
           },
           "b"_a,
@@ -76,7 +76,7 @@ void exposeBDCSVD(nb::module_ m, const char *name) {
           "decomposition of A.")
       .def(
           "solve",
-          [](const Solver &c, const MatrixType &B) -> MatrixType {
+          [](const Solver& c, const MatrixType& B) -> MatrixType {
             return solve(c, B);
           },
           "B"_a,
