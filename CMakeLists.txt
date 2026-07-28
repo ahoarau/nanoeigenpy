@@ -42,8 +42,8 @@ endif()
 # We require >=2.5.0 for nanobind_add_stub,
 # NB_SUPPRESS_WARNINGS, and visitor pattern (c++)
 if(NOT nanobind_FOUND)
-  set(nanobind_GIT_REPOSITORY "https://github.com/wjakob/nanobind.git")
-  set(nanobind_GIT_TAG "v2.13.0")
+  set(nanobind_GIT_REPOSITORY "https://github.com/ahoarau/nanobind.git")
+  set(nanobind_GIT_TAG "fix-stubgen-typing-extensions-typevartuple")
 
   message(
     STATUS
