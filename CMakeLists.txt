@@ -208,18 +208,14 @@ jrl_check_python_module_name(nanoeigenpy)
 
 target_link_libraries(nanoeigenpy PUBLIC nanoeigenpy_headers)
 
-# Stub generation requires typing-extensions
-# ROS Humble ships an incompatible typing-extensions with python3.10
-if(Python_VERSION VERSION_GREATER_EQUAL 3.11.0)
-  nanobind_add_stub(
-    nanoeigenpy_stub
-    VERBOSE
-    MODULE nanoeigenpy
-    OUTPUT ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy.pyi
-    PYTHON_PATH $<TARGET_FILE_DIR:nanoeigenpy>
-    DEPENDS nanoeigenpy
-  )
-endif()
+nanobind_add_stub(
+  nanoeigenpy_stub
+  VERBOSE
+  MODULE nanoeigenpy
+  OUTPUT ${CMAKE_BINARY_DIR}/lib/site-packages/nanoeigenpy.pyi
+  PYTHON_PATH $<TARGET_FILE_DIR:nanoeigenpy>
+  DEPENDS nanoeigenpy
+)
 
 jrl_python_compute_install_dir(python_install_dir)
 # NOTE: install the whole binary dir, we need the "/" at the end to copy the content.
