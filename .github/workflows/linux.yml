@@ -1,30 +1,32 @@
 name: CI - Linux (APT)
 
-on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - .gitlab-ci.yml
-      - .gitignore
-      - '*.md'
-      - CITATION.*
-      - LICENSE
-      - colcon.pkg
-      - .pre-commit-config.yaml
-      - CHANGELOG.md
-      - development/*.md
-  pull_request:
-    paths-ignore:
-      - .gitlab-ci.yml
-      - .gitignore
-      - '*.md'
-      - CITATION.*
-      - LICENSE
-      - colcon.pkg
-      - .pre-commit-config.yaml
-      - CHANGELOG.md
-      - development/*.md
+on: [push, pull_request]
+
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths-ignore:
+#       - .gitlab-ci.yml
+#       - .gitignore
+#       - '*.md'
+#       - CITATION.*
+#       - LICENSE
+#       - colcon.pkg
+#       - .pre-commit-config.yaml
+#       - CHANGELOG.md
+#       - development/*.md
+#   pull_request:
+#     paths-ignore:
+#       - .gitlab-ci.yml
+#       - .gitignore
+#       - '*.md'
+#       - CITATION.*
+#       - LICENSE
+#       - colcon.pkg
+#       - .pre-commit-config.yaml
+#       - CHANGELOG.md
+#       - development/*.md
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
